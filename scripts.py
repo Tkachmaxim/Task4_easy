@@ -11,7 +11,7 @@ from JobforJunes import data
 
 from JobforJunes.models import Specialty, Company, Vacancy
 
-'''
+
 for specialty in data.specialties:
     object_spec=Specialty(code=specialty['code'], title=specialty['title'])
     object_spec.save()
@@ -28,12 +28,8 @@ for vacantion in data.jobs:
                           published_at=vacantion['posted'])
     new_vacantion.save()
 
-'''
 
-p=Specialty.objects.annotate(num_vacancies=Count('vacancies'))
 
-for z in p:
-    print(z.num_vacancies)
 
 
 

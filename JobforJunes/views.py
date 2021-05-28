@@ -8,12 +8,7 @@ from django.shortcuts import render
 
 from django.views import View
 
-
-
-from JobforJunes.models import Company
-from JobforJunes.models import Vacancy
-from JobforJunes.models import Specialty
-
+from JobforJunes.models import Company, Vacancy, Specialty
 
 
 
@@ -33,7 +28,7 @@ class AllVacantions(View):
 class Vacantions_by_speciality(View):
     def get(self, request, specialty_pk):
         try:
-            vacancies = Vacancy.objects.filter(specialty=Specialty.objects.filter(code=specialty_pk)[0].id)
+            vacancies = Vacancy.objects.filter(specialty__code=specialty_pk)
         except:
             return HttpResponseNotFound('Инофрмация не найдна')
         return render(request, 'vacancies.html', context={'vacancies_t':vacancies})
@@ -44,11 +39,10 @@ class Company_view(View):
         try:
             company=Company.objects.get(id=pk_com)
             vacancy=Vacancy.objects.filter(company=company)
-            number_vacantions=Vacancy.objects.filter(company=company).count()
         except:
-            return HttpResponseNotFound('Инофрмация не найдна')
+           return HttpResponseNotFound('Инофрмация не найдна')
 
-        return render(request, 'company.html', context={'companies':company, 'vacancy':vacancy, 'number_vacation':number_vacantions})
+        return render(request, 'company.html', context={'companies':company, 'vacancy':vacancy})
 
 
 class Vacancy_view(View):
