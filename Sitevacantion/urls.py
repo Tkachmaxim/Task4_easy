@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, Company_view, Vacancy_view
 from JobforJunes.views import c_handler404, c_handler500
 
@@ -26,8 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Main_page.as_view(), name='main'),
     path('vacancies/', AllVacantions.as_view(), name='vacancies'),
-    path('vacancies/cat/<str:specialty_pk>/',Vacantions_by_speciality.as_view(), name='vacancion_by_specialty'),
-    path('companies/<int:pk_com>/',Company_view.as_view(), name='company'),
+    path('vacancies/cat/<str:specialty_pk>/', Vacantions_by_speciality.as_view(), name='vacancion_by_specialty'),
+    path('companies/<int:pk_com>/', Company_view.as_view(), name='company'),
     path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy')
 ]
-
