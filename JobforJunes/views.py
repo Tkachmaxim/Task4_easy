@@ -8,7 +8,6 @@ from django.views import View
 
 from django.core.exceptions import ObjectDoesNotExist
 
-
 from JobforJunes.models import Company, Vacancy, Specialty
 
 
