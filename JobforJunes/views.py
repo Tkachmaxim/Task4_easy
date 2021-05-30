@@ -1,12 +1,13 @@
 from django.db.models import Count
 
-from django.http import HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
 
 from django.shortcuts import render
 
 from django.views import View
 
 from django.core.exceptions import ObjectDoesNotExist
+
 
 from JobforJunes.models import Company, Vacancy, Specialty
 
@@ -36,7 +37,7 @@ class Company_view(View):
             company = Company.objects.get(id=pk_com)
             vacancy = Vacancy.objects.filter(company=company)
         except ObjectDoesNotExist:
-            return HttpResponseNotFound('Инофрмация не найдна')
+            raise Http404('Такой компании нет')
 
         return render(request, 'company.html', context={'companies': company, 'vacancy': vacancy})
 
@@ -46,7 +47,7 @@ class Vacancy_view(View):
         try:
             vacancy = Vacancy.objects.get(id=pk_vac)
         except ObjectDoesNotExist:
-            return HttpResponseNotFound('Инофрмация не найдна')
+            raise Http404('Такой вакансии нет')
 
         return render(request, 'vacancy.html', context={'vacancy': vacancy})
 
