@@ -5,13 +5,13 @@ from django.contrib.auth import get_user_model
 class Specialty(models.Model):
     code = models.CharField(max_length=20)
     title = models.CharField(max_length=20)
-    picture = models.URLField(default='https://place-hold.it/100x60')
+    picture = models.ImageField(upload_to='speciality_images')
 
 
 class Company(models.Model):
     name = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
-    logo = models.URLField(default='https://place-hold.it/100x60')
+    logo = models.ImageField(upload_to='company_images')
     description = models.TextField()
     employee_count = models.IntegerField()
     owner=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE, related_name='company')

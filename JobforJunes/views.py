@@ -32,7 +32,7 @@ class Register_User(View):
         if form.is_valid():
             user=form.cleaned_data
             user.save()
-            return redirect(Register_User)
+            return redirect('login/')
         return render(request, 'register.html', {'form': form})
 
 

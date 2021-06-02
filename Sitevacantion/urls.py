@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
     Company_view, Vacancy_view, My_Login, Register_User
@@ -34,3 +36,8 @@ urlpatterns = [
     path('login/', My_Login.as_view(), name='login'),
     path('register/', Register_User.as_view(), name='register')
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
