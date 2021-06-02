@@ -1,14 +1,42 @@
 from django.db.models import Count
 
-from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
+from django.http import HttpResponseNotFound, HttpResponseServerError, Http404, HttpResponseRedirect
 
-from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm
+
+from django.contrib.auth.views import LoginView
+
+from django.shortcuts import render, redirect
 
 from django.views import View
 
 from django.core.exceptions import ObjectDoesNotExist
 
 from JobforJunes.models import Company, Vacancy, Specialty
+
+from JobforJunes.forms import Register_User_Form
+
+class My_Login(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'login.html'
+
+class Register_User(View):
+
+    def get(self, request):
+        form=Register_User_Form()
+        return render(request, 'register.html', {'form':form})
+
+    def post(self, request):
+        form=Register_User_Form(request.POST)
+        print(form)
+        if form.is_valid():
+            user=form.cleaned_data
+            user.save()
+            return redirect(Register_User)
+        return render(request, 'register.html', {'form': form})
+
+
+
 
 
 class Main_page(View):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class Specialty(models.Model):
@@ -13,6 +14,7 @@ class Company(models.Model):
     logo = models.URLField(default='https://place-hold.it/100x60')
     description = models.TextField()
     employee_count = models.IntegerField()
+    owner=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE, related_name='company')
 
 
 class Vacancy(models.Model):
@@ -24,3 +26,11 @@ class Vacancy(models.Model):
     salary_min = models.IntegerField()
     salary_max = models.IntegerField()
     published_at = models.CharField(max_length=20)
+
+
+class Application(models.Model):
+    written_username = models.CharField(max_length=50)
+    written_phone = models.CharField(max_length=50)
+    written_cover_letter = models.TextField()
+    vacancy = models.ForeignKey(Vacancy, null=True, on_delete=models.CASCADE, related_name='applications')
+    user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE, related_name='applications')

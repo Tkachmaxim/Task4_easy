@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, Company_view, Vacancy_view
+from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
+    Company_view, Vacancy_view, My_Login, Register_User
 from JobforJunes.views import c_handler404, c_handler500
 
 handler400 = c_handler404
@@ -29,5 +30,7 @@ urlpatterns = [
     path('vacancies/', AllVacantions.as_view(), name='vacancies'),
     path('vacancies/cat/<str:specialty_pk>/', Vacantions_by_speciality.as_view(), name='vacancion_by_specialty'),
     path('companies/<int:pk_com>/', Company_view.as_view(), name='company'),
-    path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy')
+    path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy'),
+    path('login/', My_Login.as_view(), name='login'),
+    path('register/', Register_User.as_view(), name='register')
 ]
