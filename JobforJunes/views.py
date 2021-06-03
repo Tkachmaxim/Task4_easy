@@ -20,8 +20,9 @@ from JobforJunes.forms import Register_User_Form
 
 
 class My_Login(LoginView):
-    form_class = AuthenticationForm
+
     template_name = 'login.html'
+
 
 class Register_User(View):
 
