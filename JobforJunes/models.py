@@ -34,3 +34,8 @@ class Application(models.Model):
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, null=True, on_delete=models.CASCADE, related_name='applications')
     user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE, related_name='applications')
+
+
+class User(models.Model):
+    name=models.CharField(max_length=20)
+    email=models.EmailField()

@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
-    Company_view, Vacancy_view, My_Login, Register_User
+    Company_view, Vacancy_view, My_Login, Register_User, Send_Request
 from JobforJunes.views import c_handler404, c_handler500
 
 handler400 = c_handler404
@@ -34,7 +34,8 @@ urlpatterns = [
     path('companies/<int:pk_com>/', Company_view.as_view(), name='company'),
     path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy'),
     path('login/', My_Login.as_view(), name='login'),
-    path('register/', Register_User.as_view(), name='register')
+    path('register/', Register_User.as_view(), name='register'),
+    path('vacancies/<int:pk_vac>/send/', Send_Request.as_view(), name='send' )
 ]
 
 

@@ -16,6 +16,9 @@ from JobforJunes.models import Company, Vacancy, Specialty
 
 from JobforJunes.forms import Register_User_Form
 
+
+
+
 class My_Login(LoginView):
     form_class = AuthenticationForm
     template_name = 'login.html'
@@ -23,17 +26,15 @@ class My_Login(LoginView):
 class Register_User(View):
 
     def get(self, request):
-        form=Register_User_Form()
-        return render(request, 'register.html', {'form':form})
+        return render(request, 'register.html', context={'form':Register_User_Form})
 
     def post(self, request):
         form=Register_User_Form(request.POST)
-        print(form)
         if form.is_valid():
-            user=form.cleaned_data
-            user.save()
-            return redirect('login/')
-        return render(request, 'register.html', {'form': form})
+            print(form.cleaned_data)
+            form.cleaned_data.save()
+            return redirect('login')
+        return render(request, 'register.html', context={'form':form})
 
 
 
@@ -85,3 +86,12 @@ def c_handler404(request, exception):
 
 def c_handler500(request):
     return HttpResponseServerError('Ошибка сервера')
+
+class Send_Request(View):
+    def get(self, request, pk_vac):
+        try:
+            vacancy = Vacancy.objects.get(id=pk_vac)
+        except ObjectDoesNotExist:
+            raise Http404('Такой вакансии нет')
+
+        return render(request, 'sent.html', context={'vacancy': vacancy})
