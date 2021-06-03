@@ -4,6 +4,9 @@ from django.http import HttpResponseNotFound, HttpResponseServerError, Http404, 
 
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView
+
 from django.contrib.auth.views import LoginView
 
 from django.shortcuts import render, redirect
@@ -12,7 +15,7 @@ from django.views import View
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from JobforJunes.models import Company, Vacancy, Specialty
+from JobforJunes.models import Company, Vacancy, Specialty, User
 
 from JobforJunes.forms import Register_User_Form
 
@@ -33,8 +36,7 @@ class Register_User(View):
         form=Register_User_Form(request.POST)
         print(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            form.cleaned_data.save()
+            form.save()
             return redirect('login')
         return render(request, 'register.html', context={'form':form})
 
