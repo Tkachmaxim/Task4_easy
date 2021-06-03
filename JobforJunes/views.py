@@ -31,6 +31,7 @@ class Register_User(View):
 
     def post(self, request):
         form=Register_User_Form(request.POST)
+        print(request.POST)
         if form.is_valid():
             print(form.cleaned_data)
             form.cleaned_data.save()

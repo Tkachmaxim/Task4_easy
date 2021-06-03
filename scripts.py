@@ -4,7 +4,7 @@ import django
 
 from JobforJunes import data
 
-from JobforJunes.models import Specialty, Company, Vacancy
+from JobforJunes.models import Specialty, Company, Vacancy, User
 
 os.environ["DJANGO_SETTINGS_MODULE"] = 'Sitevacantion.settings'
 django.setup()
