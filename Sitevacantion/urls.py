@@ -19,8 +19,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
-    Company_view, Vacancy_view, My_Login, Register_User, Send_Request
+    Company_view, Vacancy_view, Send_Request, CompanyStart, CompanyCreate, MyCompany, \
+    MyVacanciesList, VacancyEdit, VacancyCreate, AplicationSend
 from JobforJunes.views import c_handler404, c_handler500
+
+from users_app.views import MySignupView, MyLoginView, LogoutView
 
 handler400 = c_handler404
 handler500 = c_handler500
@@ -33,9 +36,16 @@ urlpatterns = [
     path('vacancies/cat/<str:specialty_pk>/', Vacantions_by_speciality.as_view(), name='vacancion_by_specialty'),
     path('companies/<int:pk_com>/', Company_view.as_view(), name='company'),
     path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy'),
-    path('login/', My_Login.as_view(), name='login'),
-    path('register/', Register_User.as_view(), name='register'),
-    path('vacancies/<int:pk_vac>/send/', Send_Request.as_view(), name='send' )
+    path('login/', MyLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', MySignupView.as_view(), name='Signup'),
+    path('mycompany/letsstart/', CompanyStart.as_view(), name='company_start'),
+    path('mycompany/create/', CompanyCreate.as_view(), name='create_new_company'),
+    path('mycompany/', MyCompany.as_view(), name='my_company'),
+    path('mycompany/vacancies/', MyVacanciesList.as_view(), name='my_vacancies'),
+    path('mycompany/vacancies/<int:pk_vac>/', VacancyEdit.as_view(), name='vacancy_edit'),
+    path('mycompany/vacancies/create/', VacancyCreate.as_view(), name='vacancy_create'),
+    path('vacancies/<int:pk_vac>/send/', AplicationSend.as_view(), name='sent')
 ]
 
 

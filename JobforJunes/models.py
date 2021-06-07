@@ -1,16 +1,14 @@
 from django.db import models
-
-
-
-class User(models.Model):
-    name=models.CharField(max_length=20)
-    email=models.EmailField()
+from django.contrib.auth import get_user_model
 
 
 class Specialty(models.Model):
     code = models.CharField(max_length=20)
     title = models.CharField(max_length=20)
     picture = models.ImageField(upload_to='speciality_images')
+
+    def __str__(self):
+        return self.title
 
 
 class Company(models.Model):
@@ -19,7 +17,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to='company_images')
     description = models.TextField()
     employee_count = models.IntegerField()
-    owner=models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='company')
+    owner=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE, related_name='company')
 
 
 class Vacancy(models.Model):
@@ -38,6 +36,6 @@ class Application(models.Model):
     written_phone = models.CharField(max_length=50)
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, null=True, on_delete=models.CASCADE, related_name='applications')
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='applications')
+    user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE, related_name='applications')
 
 
