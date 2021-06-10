@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from django.contrib import messages
 
@@ -22,12 +22,56 @@ from django.views import View
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from JobforJunes.models import Company, Vacancy, Specialty
+from JobforJunes.models import Company, Vacancy, Specialty, Resume
 
-from JobforJunes.forms import MyCompanyForm, VacancyEditForm, AplicationForm
+from JobforJunes.forms import MyCompanyForm, VacancyEditForm, AplicationForm, ResumeForm
 
-class CompanyStart(View):
-    @method_decorator(login_required)
+
+class ResumeStart(LoginRequiredMixin, View):
+    login_url = 'login'
+    def get(self, request):
+        try:
+            resume=Resume.objects.get(user=request.user)
+            form=ResumeForm(instance=resume)
+        except ObjectDoesNotExist:
+            return render(request, 'resume_create.html')
+        return render(request, 'resume_edit.html', {'form':form})
+
+    def post(self, request):
+        resume = Resume.objects.get(user=request.user)
+        form = ResumeForm(request.POST, instance=resume)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ваше резюме обновлено!')
+            return redirect(request.path)
+        messages.error(request, 'Резюме не обновлено, что-то пошло не так')
+        return render(request, 'resume_edit.html', {'form':form})
+
+
+class ResumeCreate(LoginRequiredMixin, View):
+    login_url = 'login'
+    def get(self, request):
+        form=ResumeForm
+        return render(request, 'resume_edit.html', {'form':form})
+
+    def post(self, request):
+        resume=ResumeForm(request.POST)
+        if resume.is_valid():
+            result=resume.save(commit=False)
+            result.user_id=request.user.id
+            resume.save()
+            messages.success(request, 'Поздравляем, Вы создали резюме!')
+            return redirect('resume_start')
+        messages.error(request, 'Резюме не создано, что-то пошло не так')
+        return render(request, 'resume_edit.html', {'form':form})
+
+
+
+
+
+
+class CompanyStart(LoginRequiredMixin, View):
+    login_url = 'login'
     def get(self, request):
         try:
             if request.user.company:
@@ -36,7 +80,8 @@ class CompanyStart(View):
             return render(request, 'company_start.html')
 
 
-class MyCompany(View):
+class MyCompany(LoginRequiredMixin,View):
+    login_url = 'login'
     def get(self, request):
         company=request.user.company
         form=MyCompanyForm(instance=company)
@@ -46,7 +91,9 @@ class MyCompany(View):
         form=MyCompanyForm(request.POST, request.FILES, instance=request.user.company)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Информация о компании обновлена')
             return redirect(request.path)
+        messages.error(request, 'Что-то пошло не так!')
         return render(request,'my_company.html', {'form':form})
 
 class CompanyCreate(View):
@@ -60,12 +107,14 @@ class CompanyCreate(View):
             new_company=form.save()
             new_company.owner=request.user
             new_company.save()
+            messages.success(request,'Поздравляем, Вы успешно создали компнию')
             return redirect('my_company')
+        messages.error(request, 'Компания не создана, проверьте правильность введенных данных')
 
 
 class MyVacanciesList(View):
     def get(self, request):
-        my_vacancies = Vacancy.objects.filter(company=request.user.company)
+        my_vacancies = Vacancy.objects.filter(company=request.user.company).annotate(appl_number=Count('applications'))
         if len(my_vacancies)>0:
             return render(request, 'vacancy_list.html', {'my_vacancies':my_vacancies})
         else:
@@ -89,24 +138,47 @@ class VacancyEdit(View):
     def get(self, request, pk_vac):
         my_vacancies=Vacancy.objects.get(id=pk_vac)
         form=VacancyEditForm(instance=my_vacancies)
-        return render(request, 'vacancy_edit.html', {'form':form})
+        return render(request, 'vacancy_edit.html', {'form':form, 'vacancy':my_vacancies})
 
     def post(self, request,  pk_vac):
         my_vacancies = Vacancy.objects.get(id=pk_vac)
         form = VacancyEditForm(request.POST, instance=my_vacancies)
         if form.is_valid():
             form.save()
+            messages.success(request, "Вакансия обновлена")
+            print(messages.success)
             return redirect('vacancy_edit', pk_vac)
+        messages.error(request, "Вакансия не обновлена, проверьте правильность данных")
 
 
 class Main_page(View):
-    login_url = 'signup/'
 
     def get(self, request):
-        print(request.user.is_anonymous)
         specialties = Specialty.objects.annotate(number_vacantion=Count('vacancies'))
         companies = Company.objects.annotate(number_companies=Count('companies'))
         return render(request, 'index.html', context={'all': {'specialties': specialties, 'companies': companies}})
+
+
+
+class Search(View):
+    def get(self, request):
+        query = request.GET.get('search')
+        if query==None or query=='':
+            messages.error(request,'Ничего не найдено')
+            return redirect('search')
+        else:
+            vacancies=Vacancy.objects.filter(Q(title__icontains=query)|
+                                             Q(description__icontains=query)|
+                                             Q(skills__icontains=query))
+            if len(vacancies)==0:
+                messages.error(request, 'Ничего не найдено')
+
+
+
+
+        return render(request,'search.html', {'vacancies':vacancies})
+
+
 
 
 class AllVacantions(View):

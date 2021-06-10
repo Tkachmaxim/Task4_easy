@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 
 from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
     Company_view, Vacancy_view, Send_Request, CompanyStart, CompanyCreate, MyCompany, \
-    MyVacanciesList, VacancyEdit, VacancyCreate, AplicationSend
+    MyVacanciesList, VacancyEdit, VacancyCreate, AplicationSend, Search, ResumeStart, \
+    ResumeCreate
 from JobforJunes.views import c_handler404, c_handler500
 
 from users_app.views import MySignupView, MyLoginView, LogoutView
@@ -45,7 +46,11 @@ urlpatterns = [
     path('mycompany/vacancies/', MyVacanciesList.as_view(), name='my_vacancies'),
     path('mycompany/vacancies/<int:pk_vac>/', VacancyEdit.as_view(), name='vacancy_edit'),
     path('mycompany/vacancies/create/', VacancyCreate.as_view(), name='vacancy_create'),
-    path('vacancies/<int:pk_vac>/send/', AplicationSend.as_view(), name='sent')
+    path('vacancies/<int:pk_vac>/send/', AplicationSend.as_view(), name='sent'),
+    path('search/', Search.as_view(), name='search',),
+    path('myresume/letsstart/', ResumeStart.as_view(), name='resume_start'),
+    path('myresume/create/', ResumeCreate.as_view(), name='resume_create')
+
 ]
 
 

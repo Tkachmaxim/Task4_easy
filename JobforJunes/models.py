@@ -38,4 +38,28 @@ class Application(models.Model):
     vacancy = models.ForeignKey(Vacancy, null=True, on_delete=models.CASCADE, related_name='applications')
     user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE, related_name='applications')
 
+STATUSES=[]
+class Resume(models.Model):
+    user=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE)
+    name=models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
+    class Status(models.TextChoices):
+        notavaible='Notavaible', 'Не ищу работу'
+        ready='Ready', 'Рассматриваю предложения'
+        avaible='Avaible','Ищу работу'
+    status=models.CharField(max_length=50, choices=Status.choices, default=Status.avaible)
+    salary=models.IntegerField()
+    specialty=models.TextField()
+    class Rate(models.TextChoices):
+        trainy='Trainy', 'Стажер'
+        djunior='Djunior', 'Джуниор'
+        middle='Middle', 'Миддл'
+        senior='Senior', 'Сеньер'
+        lead='Lead', 'Лид'
+    grade=models.CharField(max_length=50, choices=Rate.choices, default=Rate.trainy)
+    education=models.TextField()
+    experience=models.TextField()
+    portfolio=models.URLField()
+
+
 

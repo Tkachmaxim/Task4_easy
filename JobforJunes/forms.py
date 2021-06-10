@@ -1,7 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit
-from JobforJunes.models import Company, Vacancy, Application
+from JobforJunes.models import Company, Vacancy, Application, Resume
 
 
 class MyCompanyForm(forms.ModelForm):
@@ -81,3 +81,49 @@ class AplicationForm(forms.ModelForm):
                 'written_cover_letter':'Сопроводительное письмо'
                 }
 
+
+class ResumeForm (forms.ModelForm):
+    class Meta:
+        model=Resume
+        exclude=('user',)
+        labels={'name':'Имя',
+                'surname':'Фамилия',
+                'status':'Готовность к работе',
+                'salary':'Ожидаемое вознаграждение',
+                'specialty':'Специализация',
+                'grade':'Квалификация',
+                'education':'Образование',
+                'experience':'Опыт работы',
+                'portfolio':'Ссылка на портфолио'
+                }
+
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.helper=FormHelper()
+            self.helper.layout=Layout(
+                Row(
+                    Column('name',),
+                    Column(),
+                    Column('surname',),
+                ),
+                Row(
+                    Column('status',),
+                    Column('salary',),
+                ),
+                Row(
+                    Column('specialty',),
+                    Column('grade',),
+                ),
+                Row(
+                    Column('education',),
+                ),
+                Row(
+                    Column('experience',),
+                ),
+                Row(
+                    Column('portfolio',)
+                ),
+                Row(
+                    Column(Submit('submit', 'Сохранить')),
+            ),
+            )

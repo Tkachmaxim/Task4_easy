@@ -25,7 +25,7 @@
                     <div class="col-6 col-lg-8">
                       <a href="#" class="mb-1">{{vacancy.title}}</a>
                       <p class="mb-1">
-                        <span class="mr-4">{{vacancy.salary_max}}</span><a href="#" class="text-info">3 отклика</a>
+                        <span class="mr-4">{{vacancy.salary_max}}</span><a href="#" class="text-info">{{vacancy.appl_number}} отклик(ов)</a>
                       </p>
                     </div>
                     <div class="col-6 col-lg-4 text-right">
@@ -37,6 +37,8 @@
               <!-- END vacancy state 1 -->
               {% endfor %}
             </section>
+            <br>
+            <a href={% url 'vacancy_create' %} class="btn btn-info mb-2">Добавить вакансию</a>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@
           <h1 class="h4 pt-2 pb-2">Моя компания</h1>
           <div class="nav flex-column nav-pills">
             <a class="nav-link" href={% url 'my_company' %}>1. Информация о&nbsp;компании</a>
-            <a class="nav-link active" href="#">2. Вакансии</a>
+            <a class="nav-link active" href={% url 'my_vacancies' %}>2. Вакансии</a>
           </div>
         </aside>
       </div>
@@ -16,9 +16,12 @@
           <div class="card-body px-4 pb-4 tab-content">
             <!-- Tab -->
             <section>
-              <h2 class="h4 pt-2 pb-3">Backend Middle/Senior</h2>
-              <p class="alert alert-info" role="alert">Вакансия обновлена</p>
-
+              <h2 class="h4 pt-2 pb-3">{{vacancy.title}}</h2>
+              {% if messages %}
+              {% for message in messages %}
+              <p class="alert alert-info" role="alert">{{ message }}</p>
+              {% endfor %}
+              {% endif %}
               {% load crispy_forms_tags %}
               {% csrf_token %}
               {% crispy form %}

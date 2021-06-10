@@ -13,6 +13,11 @@
           <div class="card-body px-4 pb-4">
                     <section class="tab-pane fade show active">
               <h2 class="h4 pt-2 pb-3">(чтобы продолжить) Заполните форму информации о компании и сохраните</h2>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p class="alert alert-info" role="alert">{{ message }}</p>
+                        {% endfor %}
+                        {% endif %}
               {% load crispy_forms_tags %}
               {% csrf_token %}
               {% crispy form %}
