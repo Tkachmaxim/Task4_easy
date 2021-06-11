@@ -18,11 +18,16 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from JobforJunes.views import Main_page, AllVacantions, Vacantions_by_speciality, \
-    Company_view, Vacancy_view, Send_Request, CompanyStart, CompanyCreate, MyCompany, \
-    MyVacanciesList, VacancyEdit, VacancyCreate, AplicationSend, Search, ResumeStart, \
-    ResumeCreate
-from JobforJunes.views import c_handler404, c_handler500
+from JobforJunes.views.public import Main_page, AllVacantions, Vacantions_by_speciality, \
+    Company_view, Vacancy_view, AplicationSend, Search
+
+from JobforJunes.views.my_resume import ResumeStart, ResumeCreate
+
+from  JobforJunes.views.my_company import CompanyCreate, CompanyStart, MyCompany
+
+from JobforJunes.views.my_vacancies import MyVacanciesList, VacancyEdit, VacancyCreate
+
+from JobforJunes.views.public import c_handler404, c_handler500
 
 from users_app.views import MySignupView, MyLoginView, LogoutView
 
