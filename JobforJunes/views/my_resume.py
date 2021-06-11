@@ -16,8 +16,8 @@ class ResumeStart(LoginRequiredMixin, View):
             resume=Resume.objects.get(user=request.user)
             form=ResumeForm(instance=resume)
         except ObjectDoesNotExist:
-            return render(request, 'resume_create.html')
-        return render(request, 'resume_edit.html', {'form':form})
+            return render(request, r'my_resume\resume_create.html')
+        return render(request, r'my_resume\resume_edit.html', {'form':form})
 
     def post(self, request):
         resume = Resume.objects.get(user=request.user)
@@ -27,14 +27,14 @@ class ResumeStart(LoginRequiredMixin, View):
             messages.success(request, 'Ваше резюме обновлено!')
             return redirect(request.path)
         messages.error(request, 'Резюме не обновлено, что-то пошло не так')
-        return render(request, 'resume_edit.html', {'form':form})
+        return render(request, r'my_resume\resume_edit.html', {'form':form})
 
 
 class ResumeCreate(LoginRequiredMixin, View):
     login_url = 'login'
     def get(self, request):
         form=ResumeForm
-        return render(request, 'resume_edit.html', {'form':form})
+        return render(request, r'my_resume\resume_edit.html', {'form':form})
 
     def post(self, request):
         resume=ResumeForm(request.POST)
@@ -45,5 +45,5 @@ class ResumeCreate(LoginRequiredMixin, View):
             messages.success(request, 'Поздравляем, Вы создали резюме!')
             return redirect('resume_start')
         messages.error(request, 'Резюме не создано, что-то пошло не так')
-        return render(request, 'resume_edit.html', {'form':form})
+        return render(request, r'my_resume\resume_edit.html', {'form':form})
 

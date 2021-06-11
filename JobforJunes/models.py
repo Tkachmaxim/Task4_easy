@@ -38,7 +38,7 @@ class Application(models.Model):
     vacancy = models.ForeignKey(Vacancy, null=True, on_delete=models.CASCADE, related_name='applications')
     user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE, related_name='applications')
 
-STATUSES=[]
+
 class Resume(models.Model):
     user=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
