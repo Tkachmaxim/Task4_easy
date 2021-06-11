@@ -50,9 +50,11 @@ class VacancyEdit(LoginRequiredMixin, View):
     def post(self, request,  pk_vac):
         my_vacancies = Vacancy.objects.get(id=pk_vac)
         form = VacancyEditForm(request.POST, instance=my_vacancies)
+        apllacations = Application.objects.filter(vacancy=my_vacancies)
         if form.is_valid():
             form.save()
             messages.success(request, "Вакансия обновлена")
             return redirect('vacancy_edit', pk_vac)
         messages.error(request, "Вакансия не обновлена, проверьте правильность данных")
+        return render(request, r'my_vacancies\vacancy_edit.html', {'form':form, 'vacancy':my_vacancies, 'applications':apllacations})
 

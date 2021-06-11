@@ -18,8 +18,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from JobforJunes.views.public import Main_page, AllVacantions, Vacantions_by_speciality, \
-    Company_view, Vacancy_view, AplicationSend, Search
+from JobforJunes.views.public import MainPage, AllVacantions, VacantionsBySpeciality, \
+    CompanyView, VacancyView, AplicationSend, Search
 
 from JobforJunes.views.my_resume import ResumeStart, ResumeCreate
 
@@ -37,11 +37,11 @@ handler500 = c_handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Main_page.as_view(), name='main'),
+    path('', MainPage.as_view(), name='main'),
     path('vacancies/', AllVacantions.as_view(), name='vacancies'),
-    path('vacancies/cat/<str:specialty_pk>/', Vacantions_by_speciality.as_view(), name='vacancion_by_specialty'),
-    path('companies/<int:pk_com>/', Company_view.as_view(), name='company'),
-    path('vacancies/<int:pk_vac>/', Vacancy_view.as_view(), name='vacancy'),
+    path('vacancies/cat/<str:specialty_pk>/', VacantionsBySpeciality.as_view(), name='vacancion_by_specialty'),
+    path('companies/<int:pk_com>/', CompanyView.as_view(), name='company'),
+    path('vacancies/<int:pk_vac>/', VacancyView.as_view(), name='vacancy'),
     path('login/', MyLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', MySignupView.as_view(), name='Signup'),
