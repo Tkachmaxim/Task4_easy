@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Sitevacantion.urls'
@@ -140,6 +141,7 @@ LOGIN_REDIRECT_URL = '/mycompany/letsstart/'
 LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-heroku config:set DISABLE_COLLECTSTATIC=1
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
