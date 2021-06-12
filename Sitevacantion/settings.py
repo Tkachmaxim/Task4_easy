@@ -143,5 +143,3 @@ LOGOUT_REDIRECT_URL = '/'
 STATIC_ROOT = 'static'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
