@@ -140,7 +140,7 @@ MEDIA_SPECIALITY_IMAGE_DIR = 'speciality_images'
 LOGIN_REDIRECT_URL = '/mycompany/letsstart/'
 LOGOUT_REDIRECT_URL = '/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = 'static'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
