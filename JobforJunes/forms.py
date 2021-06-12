@@ -1,22 +1,10 @@
-from django import forms
 from crispy_forms.helper import FormHelper
+
 from crispy_forms.layout import Layout, Row, Column, Submit
+
+from django import forms
+
 from JobforJunes.models import Company, Vacancy, Application, Resume
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
-
-
-class RegisterUserForm(UserCreationForm):
-    first_name=forms.CharField(max_length=30, label='Имя')
-    last_name=forms.CharField(max_length=30, label='Фамилия')
-    email=forms.EmailField(label='Адрес электронной почты')
-    class Meta:
-        model=get_user_model()
-        labels={
-            'username':'Логин',
-            'password1':'Пароль',
-            'password2':'Повторите пароль'}
-        fields=('username', 'password1', 'password2', 'first_name', 'last_name', 'email')
 
 
 class MyCompanyForm(forms.ModelForm):
@@ -54,91 +42,92 @@ class MyCompanyForm(forms.ModelForm):
 
 class VacancyEditForm(forms.ModelForm):
     class Meta:
-        model=Vacancy
-        exclude=('published_at','company')
-        labels={'title':'Название вакансии',
-                'specialty':'Специализация',
-                'salary_min':'Зарплата от:',
-                'salary_max': 'Зарплата до:',
-                'skills':'Требуемые навыки',
-                'description':'Описание вакансии'
-                }
+        model = Vacancy
+        exclude = ('published_at', 'company')
+        labels = {'title': 'Название вакансии',
+                  'specialty': 'Специализация',
+                  'salary_min': 'Зарплата от:',
+                  'salary_max': 'Зарплата до:',
+                  'skills': 'Требуемые навыки',
+                  'description': 'Описание вакансии'
+                  }
+
     def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.helper=FormHelper()
-            self.helper.layout=Layout(
-                Row(
-                    Column('title',),
-                    Column('specialty',),
-                    ),
-                Row(
-                    Column('salary_min',),
-                    Column('salary_max',),
-                ),
-                Row(
-                    Column('skills',),
-                ),
-                Row(
-                    Column('description',),
-                ),
-                Row(
-                    Column(Submit('submit', 'Сохранить')),
-                ),
-            )
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('title', ),
+                Column('specialty', ),
+            ),
+            Row(
+                Column('salary_min', ),
+                Column('salary_max', ),
+            ),
+            Row(
+                Column('skills', ),
+            ),
+            Row(
+                Column('description', ),
+            ),
+            Row(
+                Column(Submit('submit', 'Сохранить')),
+            ),
+        )
 
 
 class AplicationForm(forms.ModelForm):
     class Meta:
-        model=Application
-        exclude=('vacancy', 'user')
-        labels={'written_username':'Вас зовут',
-                'written_phone':'Ваш телефон',
-                'written_cover_letter':'Сопроводительное письмо'
-                }
+        model = Application
+        exclude = ('vacancy', 'user')
+        labels = {'written_username': 'Вас зовут',
+                  'written_phone': 'Ваш телефон',
+                  'written_cover_letter': 'Сопроводительное письмо'
+                  }
 
 
-class ResumeForm (forms.ModelForm):
+class ResumeForm(forms.ModelForm):
     class Meta:
-        model=Resume
-        exclude=('user',)
-        labels={'name':'Имя',
-                'surname':'Фамилия',
-                'status':'Готовность к работе',
-                'salary':'Ожидаемое вознаграждение',
-                'specialty':'Специализация',
-                'grade':'Квалификация',
-                'education':'Образование',
-                'experience':'Опыт работы',
-                'portfolio':'Ссылка на портфолио'
-                }
+        model = Resume
+        exclude = ('user',)
+        labels = {'name': 'Имя',
+                  'surname': 'Фамилия',
+                  'status': 'Готовность к работе',
+                  'salary': 'Ожидаемое вознаграждение',
+                  'specialty': 'Специализация',
+                  'grade': 'Квалификация',
+                  'education': 'Образование',
+                  'experience': 'Опыт работы',
+                  'portfolio': 'Ссылка на портфолио'
+                  }
 
     def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.helper=FormHelper()
-            self.helper.layout=Layout(
-                Row(
-                    Column('name',),
-                    Column(),
-                    Column('surname',),
-                ),
-                Row(
-                    Column('status',),
-                    Column('salary',),
-                ),
-                Row(
-                    Column('specialty',),
-                    Column('grade',),
-                ),
-                Row(
-                    Column('education',),
-                ),
-                Row(
-                    Column('experience',),
-                ),
-                Row(
-                    Column('portfolio',)
-                ),
-                Row(
-                    Column(Submit('submit', 'Сохранить')),
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('name', ),
+                Column(),
+                Column('surname', ),
             ),
-            )
+            Row(
+                Column('status', ),
+                Column('salary', ),
+            ),
+            Row(
+                Column('specialty', ),
+                Column('grade', ),
+            ),
+            Row(
+                Column('education', ),
+            ),
+            Row(
+                Column('experience', ),
+            ),
+            Row(
+                Column('portfolio', )
+            ),
+            Row(
+                Column(Submit('submit', 'Сохранить')),
+            ),
+        )

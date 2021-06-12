@@ -17,7 +17,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to='company_images')
     description = models.TextField()
     employee_count = models.IntegerField()
-    owner=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE, related_name='company')
+    owner = models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE, related_name='company')
 
 
 class Vacancy(models.Model):
@@ -28,7 +28,7 @@ class Vacancy(models.Model):
     description = models.TextField()
     salary_min = models.IntegerField()
     salary_max = models.IntegerField()
-    published_at = models.CharField(max_length=20)
+    published_at = models.DateField(max_length=20, null=True)
 
 
 class Application(models.Model):
@@ -40,26 +40,27 @@ class Application(models.Model):
 
 
 class Resume(models.Model):
-    user=models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE)
-    name=models.CharField(max_length=50)
+    user = models.OneToOneField(get_user_model(), null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
+
     class Status(models.TextChoices):
-        notavaible='Notavaible', 'Не ищу работу'
-        ready='Ready', 'Рассматриваю предложения'
-        avaible='Avaible','Ищу работу'
-    status=models.CharField(max_length=50, choices=Status.choices, default=Status.avaible)
-    salary=models.IntegerField()
-    specialty=models.TextField()
+        notavaible = 'Notavaible', 'Не ищу работу'
+        ready = 'Ready', 'Рассматриваю предложения'
+        avaible = 'Avaible', 'Ищу работу'
+
+    status = models.CharField(max_length=50, choices=Status.choices, default=Status.avaible)
+    salary = models.IntegerField()
+    specialty = models.TextField()
+
     class Rate(models.TextChoices):
-        trainy='Trainy', 'Стажер'
-        djunior='Djunior', 'Джуниор'
-        middle='Middle', 'Миддл'
-        senior='Senior', 'Сеньер'
-        lead='Lead', 'Лид'
-    grade=models.CharField(max_length=50, choices=Rate.choices, default=Rate.trainy)
-    education=models.TextField()
-    experience=models.TextField()
-    portfolio=models.URLField()
+        trainy = 'Trainy', 'Стажер'
+        djunior = 'Djunior', 'Джуниор'
+        middle = 'Middle', 'Миддл'
+        senior = 'Senior', 'Сеньер'
+        lead = 'Lead', 'Лид'
 
-
-
+    grade = models.CharField(max_length=50, choices=Rate.choices, default=Rate.trainy)
+    education = models.TextField()
+    experience = models.TextField()
+    portfolio = models.URLField()

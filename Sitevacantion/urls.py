@@ -23,13 +23,15 @@ from JobforJunes.views.public import MainPage, AllVacantions, VacantionsBySpecia
 
 from JobforJunes.views.my_resume import ResumeStart, ResumeCreate
 
-from  JobforJunes.views.my_company import CompanyCreate, CompanyStart, MyCompany
+from JobforJunes.views.my_company import CompanyCreate, CompanyStart, MyCompany
 
 from JobforJunes.views.my_vacancies import MyVacanciesList, VacancyEdit, VacancyCreate
 
 from JobforJunes.views.public import c_handler404, c_handler500
 
-from users_app.views import MySignupView, MyLoginView, LogoutView
+from django.contrib.auth.views import LogoutView
+
+from users_app.views import MySignupView, MyLoginView
 
 handler400 = c_handler404
 handler500 = c_handler500
