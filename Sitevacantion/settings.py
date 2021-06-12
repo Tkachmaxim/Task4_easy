@@ -140,6 +140,6 @@ LOGIN_REDIRECT_URL = '/mycompany/letsstart/'
 LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-django_heroku.settings(locals())
+heroku config:set DISABLE_COLLECTSTATIC=1
 
 
