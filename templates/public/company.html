@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{% block project %}
+  <main class="container mt-3">
+    <div class="navbar mt-5">
+      <p><a href={% url 'main' %}>Назад</a></p>
+    </div>
+    <section>
+      <div class="text-center">
+        <img src={{ companies.logo.url }} width="130" height="80" alt="">
+      </div>
+      <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{companies.name}}</strong></h1>
+      <p class="text-center pt-1">Компания, {{companies.location}}, {{vacancy|length}} вакансий</p>
+      <div class="row mt-5">
+        {% for vacantion in vacancy %}
+        <div class="col-12 col-lg-8 offset-lg-2 m-auto">
+          <div class="card mb-4">
+            <div class="card-body px-4">
+              <div class="row">
+                <div class="col-12 col-md-8 col-lg-9">
+                  <h2 class="h2 pb-2">{{vacantion.title}}</h2>
+                  <p class="mb-2">Бэкенд • Старший (Senior) • C# • ASP.NET MVC • MySQL • Git</p>
+                  <p>От 180 000 до 250 000 руб.</p>
+                  <p class="text-muted pt-1">9 декабря</p>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 d-flex align-items-end">
+                  <img src={{ vacantion.specialty.picture.url }} width="130" height="80" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          {%endfor%}
+
+{%endblock%}
