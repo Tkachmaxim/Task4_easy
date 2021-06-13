@@ -16,7 +16,7 @@ class MainPage(View):
     def get(self, request):
         specialties = Specialty.objects.annotate(number_vacantion=Count('vacancies'))
         companies = Company.objects.annotate(number_companies=Count('companies'))
-        return render(request, r'public\index.html', context={'specialties': specialties, 'companies': companies})
+        return render(request, r'public/index.html', context={'specialties': specialties, 'companies': companies})
 
 
 class Search(View):
