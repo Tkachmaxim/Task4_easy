@@ -1,11 +1,11 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit
-from django.forms import forms
+from django.forms import ModelForm
 
 from JobforJunes.models import Company, Vacancy, Application, Resume
 
 
-class MyCompanyForm(forms.ModelForm):
+class MyCompanyForm(ModelForm):
     class Meta:
         model = Company
         exclude = ('owner',)
@@ -38,7 +38,7 @@ class MyCompanyForm(forms.ModelForm):
         )
 
 
-class VacancyEditForm(forms.ModelForm):
+class VacancyEditForm(ModelForm):
     class Meta:
         model = Vacancy
         exclude = ('published_at', 'company')
@@ -74,7 +74,7 @@ class VacancyEditForm(forms.ModelForm):
         )
 
 
-class AplicationForm(forms.ModelForm):
+class AplicationForm(ModelForm):
     class Meta:
         model = Application
         exclude = ('vacancy', 'user')
@@ -84,7 +84,7 @@ class AplicationForm(forms.ModelForm):
                   }
 
 
-class ResumeForm(forms.ModelForm):
+class ResumeForm(ModelForm):
     class Meta:
         model = Resume
         exclude = ('user',)
