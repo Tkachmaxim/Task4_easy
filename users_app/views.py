@@ -6,9 +6,9 @@ from users_app.forms import RegisterUserForm
 class MySignupView(CreateView):
     form_class = RegisterUserForm
     success_url = '/login'
-    template_name = r'register\signup.html'
+    template_name = r'register/signup.html'
 
 
 class MyLoginView(LoginView):
     redirect_authenticated_user = True
-    template_name = r'register\login.html'
+    template_name = r'register/login.html'

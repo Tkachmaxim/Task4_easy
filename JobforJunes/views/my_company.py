@@ -17,7 +17,7 @@ class CompanyStart(LoginRequiredMixin, View):
             print(request.user.company)
             return redirect('my_company')
         except ObjectDoesNotExist:
-            return render(request, r'my_company\company_start.html')
+            return render(request, r'my_company/company_start.html')
 
 
 class MyCompany(LoginRequiredMixin, View):
@@ -29,7 +29,7 @@ class MyCompany(LoginRequiredMixin, View):
             form = MyCompanyForm(instance=company)
         except ObjectDoesNotExist:
             raise Http404
-        return render(request, r'my_company\my_company.html', {'form': form})
+        return render(request, r'my_company/my_company.html', {'form': form})
 
     def post(self, request):
         form = MyCompanyForm(request.POST, request.FILES, instance=request.user.company)
@@ -38,7 +38,7 @@ class MyCompany(LoginRequiredMixin, View):
             messages.success(request, 'Информация о компании обновлена')
             return redirect(request.path)
         messages.error(request, 'Что-то пошло не так!')
-        return render(request, r'my_company\my_company.html', {'form': form})
+        return render(request, r'my_company/my_company.html', {'form': form})
 
 
 class CompanyCreate(View):
@@ -47,7 +47,7 @@ class CompanyCreate(View):
             request.user.company
         except ObjectDoesNotExist:
             form = MyCompanyForm
-            return render(request, r'my_company\company_create.html', {'form': form})
+            return render(request, r'my_company/company_create.html', {'form': form})
         return redirect('my_company')
 
     def post(self, request):
